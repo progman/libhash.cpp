@@ -3,7 +3,25 @@
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 #include <stdio.h>
 #include <stdint.h>
+#include "crc16.h"
 #include "crc32.h"
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+int test_crc16(const char *str, size_t size, uint16_t value_good)
+{
+	crc16_t crc16;
+	crc16.update(str, size);
+	uint16_t value = crc16.get();
+
+
+	if (value != value_good)
+	{
+		printf("ERROR: crc16 invalid (0x%04x != 0x%04x)\n", value, value_good);
+		return -1;
+	}
+
+
+	return 0;
+}
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 int test_crc32(const char *str, size_t size, uint32_t value_good)
 {
@@ -24,16 +42,22 @@ int test_crc32(const char *str, size_t size, uint32_t value_good)
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 int test()
 {
-	char str1[] = "мама";
-	char str2[] = "мама мыла";
-	char str3[] = "мама мыла раму";
-	char str4[] = "мама мыла раму, а шура шары";
+	char str1[] = "Mom";
+	char str2[] = "Mom soap";
+	char str3[] = "Mom soap frame";
+	char str4[] = "Mom soap frame and Shura balls";
 
 
-	if (test_crc32(str1, sizeof(str1) - 1, 0x265A50E4) != 0) return -1;
-	if (test_crc32(str2, sizeof(str2) - 1, 0x5BCE26C4) != 0) return -1;
-	if (test_crc32(str3, sizeof(str3) - 1, 0x027BA318) != 0) return -1;
-	if (test_crc32(str4, sizeof(str4) - 1, 0x7EF926B7) != 0) return -1;
+	if (test_crc16(str1, sizeof(str1) - 1, 0xCA0D) != 0) return -1;
+	if (test_crc16(str2, sizeof(str2) - 1, 0x3391) != 0) return -1;
+	if (test_crc16(str3, sizeof(str3) - 1, 0xF0B1) != 0) return -1;
+	if (test_crc16(str4, sizeof(str4) - 1, 0xB1F0) != 0) return -1;
+
+
+	if (test_crc32(str1, sizeof(str1) - 1, 0x5665ad0c) != 0) return -1;
+	if (test_crc32(str2, sizeof(str2) - 1, 0xc90daf6c) != 0) return -1;
+	if (test_crc32(str3, sizeof(str3) - 1, 0x24e1dd31) != 0) return -1;
+	if (test_crc32(str4, sizeof(str4) - 1, 0x6fdb2200) != 0) return -1;
 
 
 	return 0;

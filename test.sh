@@ -3,7 +3,7 @@
 rm -rf bin &> /dev/null;
 mkdir bin &> /dev/null;
 
-g++ test.cpp crc32.cpp -o bin/test;
+g++ test.cpp crc32.cpp crc16.cpp -o bin/test;
 ./bin/test;
 
 exit "${?}";
