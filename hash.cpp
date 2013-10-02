@@ -2,13 +2,43 @@
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 #include <stdio.h>
 #include <stdint.h>
+#include <string.h>
 #include "crc16.h"
 #include "crc32.h"
+#include "sha1.hpp"
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+void view(const char *name, const void * const p, size_t size)
+{
+	printf("%s: 0x", name);
+
+	uint8_t *pp = (uint8_t *)p;
+	for (size_t i=0; i < size; i++)
+	{
+		printf("%02x\n", *pp++);
+	}
+	printf("\n");
+}
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 int main(int argc, char* argv[])
 {
+	if (argc == 2)
+	{
+		if
+		(
+			(strcmp(argv[1], "-h")     == 0) ||
+			(strcmp(argv[1], "-help")  == 0) ||
+			(strcmp(argv[1], "--help") == 0)
+		)
+		{
+			printf("example: echo 'hello world!' | %s\n", argv[0]);
+			return 1;
+		}
+	}
+
+
 	crc16_t crc16;
 	crc32_t crc32;
+	sha1_t  sha1;
 
 
 	int rc;
@@ -21,11 +51,16 @@ int main(int argc, char* argv[])
 		ch = (uint8_t)rc;
 		crc16.update(&ch, sizeof(ch));
 		crc32.update(&ch, sizeof(ch));
+		sha1.update(&ch, sizeof(ch));
 	}
 
 
 	printf("crc16: 0x%04lx\n", crc16.get());
 	printf("crc32: 0x%08lx\n", crc32.get());
+
+	sha1_t::sha1_item_t sha1_item;
+	sha1.get(sha1_item);
+	view("sha1", &sha1_item, sizeof(sha1_item));
 
 
 	return 0;
