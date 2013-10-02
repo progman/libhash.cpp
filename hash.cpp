@@ -24,7 +24,8 @@ int main(int argc, char* argv[])
 	}
 
 
-	printf ("crc16: 0x%04lx, crc32: 0x%08lx\n", crc16.get(), crc32.get());
+	printf("crc16: 0x%04lx\n", crc16.get());
+	printf("crc32: 0x%08lx\n", crc32.get());
 
 
 	return 0;
