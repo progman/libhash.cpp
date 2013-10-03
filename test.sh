@@ -27,10 +27,11 @@ function run_app()
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 function check()
 {
-	RESULT=$(echo -n "${STR}" | run_app -"${1}");
+	HASH=${3};
+	RESULT=$(echo -n "${1}" | run_app -"${2}");
 	if [ "${RESULT}" != "${HASH}" ];
 	then
-		echo "ERROR: result different for "${1}"...";
+		echo "ERROR: result different for "${2}"...";
 		echo "RESULT : ${RESULT}";
 		echo "HASH   : ${HASH}";
 		exit 1;
@@ -40,70 +41,28 @@ function check()
 # test1
 function test1()
 {
-	STR='Mom';
-	HASH="ca0d";
-	check 'crc16';
-
-
-	STR='Mom wash';
-	HASH="6afd";
-	check 'crc16';
-
-
-	STR='Mom wash window frame';
-	HASH="fec0";
-	check 'crc16';
-
-
-	STR='Mom wash window frame and Shura balls';
-	HASH="c19a";
-	check 'crc16';
+	check 'Mom'                                   'crc16' 'ca0d';
+	check 'Mom wash'                              'crc16' '6afd';
+	check 'Mom wash window frame'                 'crc16' 'fec0';
+	check 'Mom wash window frame and Shura balls' 'crc16' 'c19a';
 }
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 # test2
 function test2()
 {
-	STR='Mom';
-	HASH="5665ad0c";
-	check 'crc32';
-
-
-	STR='Mom wash';
-	HASH="2769fdb4";
-	check 'crc32';
-
-
-	STR='Mom wash window frame';
-	HASH="660246ce";
-	check 'crc32';
-
-
-	STR='Mom wash window frame and Shura balls';
-	HASH="18a5b32d";
-	check 'crc32';
+	check 'Mom'                                   'crc32' '5665ad0c';
+	check 'Mom wash'                              'crc32' '2769fdb4';
+	check 'Mom wash window frame'                 'crc32' '660246ce';
+	check 'Mom wash window frame and Shura balls' 'crc32' '18a5b32d';
 }
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 # test3
 function test3()
 {
-	STR='Mom';
-	HASH="0967082f2aa15d0a0c0acc03ed8e64555840f63f";
-	check 'sha1';
-
-
-	STR='Mom wash';
-	HASH="6d56273df975bbc6ef1eed1ec18368843647588c";
-	check 'sha1';
-
-
-	STR='Mom wash window frame';
-	HASH="3fa55a9fbceb88f31faaa8f69b04a109ffddc3aa";
-	check 'sha1';
-
-
-	STR='Mom wash window frame and Shura balls';
-	HASH="95afdf31b23f267e97b88c88553cdd325d9f5b52";
-	check 'sha1';
+	check 'Mom'                                   'sha1' '0967082f2aa15d0a0c0acc03ed8e64555840f63f';
+	check 'Mom wash'                              'sha1' '6d56273df975bbc6ef1eed1ec18368843647588c';
+	check 'Mom wash window frame'                 'sha1' '3fa55a9fbceb88f31faaa8f69b04a109ffddc3aa';
+	check 'Mom wash window frame and Shura balls' 'sha1' '95afdf31b23f267e97b88c88553cdd325d9f5b52';
 }
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 # check depends
@@ -128,7 +87,7 @@ then
 fi
 
 
-check_prog "awk cat echo md5sum mktemp rm stat";
+check_prog "cat echo rm";
 if [ "${?}" != "0" ];
 then
 	exit 1;
