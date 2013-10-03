@@ -1,66 +1,158 @@
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+// 0.0.1
+// Alexey Potehin <gnuplanet@gmail.com>, http://www.gnuplanet.ru/doc/cv
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
-#include "crc16.h"
-#include "crc32.h"
+#include "crc16.hpp"
+#include "crc32.hpp"
 #include "sha1.hpp"
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
-void view(const char *name, const void * const p, size_t size)
+// view hash
+void view_hash(const void * const p, size_t size)
 {
-	printf("%s: 0x", name);
-
-	uint8_t *pp = (uint8_t *)p;
+	const uint8_t *pp = (const uint8_t *)p;
 	for (size_t i=0; i < size; i++)
 	{
-		printf("%02x\n", *pp++);
+		printf("%02x", *pp++);
 	}
 	printf("\n");
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+// view help
+void help(const char *prog_name)
+{
+	printf("example: echo 'hello world!' | %s [-crc16|crc32|sha1]\n", prog_name);
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+// general function
 int main(int argc, char* argv[])
 {
-	if (argc == 2)
+	if (argc != 2)
 	{
-		if
-		(
-			(strcmp(argv[1], "-h")     == 0) ||
-			(strcmp(argv[1], "-help")  == 0) ||
-			(strcmp(argv[1], "--help") == 0)
-		)
-		{
-			printf("example: echo 'hello world!' | %s\n", argv[0]);
-			return 1;
-		}
+		help(argv[0]);
+		return 1;
 	}
 
 
-	crc16_t crc16;
-	crc32_t crc32;
-	sha1_t  sha1;
+	if
+	(
+		(strcmp(argv[1], "-h")     == 0) ||
+		(strcmp(argv[1], "-help")  == 0) ||
+		(strcmp(argv[1], "--help") == 0)
+	)
+	{
+		help(argv[0]);
+		return 1;
+	}
+
+
+	enum hash_type_t { NONE, CRC16, CRC32, SHA1 };
+	hash_type_t hash_type = NONE;
+
+
+	for (;;)
+	{
+		if (strcmp(argv[1], "-crc16") == 0)
+		{
+			hash_type = CRC16;
+			break;
+		}
+
+		if (strcmp(argv[1], "-crc32") == 0)
+		{
+			hash_type = CRC32;
+			break;
+		}
+
+		if (strcmp(argv[1], "-sha1") == 0)
+		{
+			hash_type = SHA1;
+			break;
+		}
+
+		help(argv[0]);
+		return 1;
+	}
 
 
 	int rc;
 	uint8_t ch;
+	crc16_t crc16;
+	crc32_t crc32;
+	sha1_t  sha1;
+	crc16_t::crc16_item_t crc16_item;
+	crc32_t::crc32_item_t crc32_item;
+	sha1_t::sha1_item_t sha1_item;
+
+
+	crc16.open(&crc16_item);
+	crc32.open(&crc32_item);
+	sha1.open(&sha1_item);
+
+
 	for (;;)
 	{
 		rc = getchar();
 		if (rc == EOF) break;
 
 		ch = (uint8_t)rc;
-		crc16.update(&ch, sizeof(ch));
-		crc32.update(&ch, sizeof(ch));
-		sha1.update(&ch, sizeof(ch));
+
+		switch (hash_type)
+		{
+			case CRC16:
+			{
+				crc16.update(&ch, sizeof(ch));
+				break;
+			}
+			case CRC32:
+			{
+				crc32.update(&ch, sizeof(ch));
+				break;
+			}
+			case SHA1:
+			{
+				sha1.update(&ch, sizeof(ch));
+				break;
+			}
+			case NONE:
+			default:
+			{
+				break;
+			}
+		}
 	}
 
 
-	printf("crc16: 0x%04lx\n", crc16.get());
-	printf("crc32: 0x%08lx\n", crc32.get());
+	crc16.close();
+	crc32.close();
+	sha1.close();
 
-	sha1_t::sha1_item_t sha1_item;
-	sha1.get(sha1_item);
-	view("sha1", &sha1_item, sizeof(sha1_item));
+
+	switch (hash_type)
+	{
+		case CRC16:
+		{
+			view_hash(&crc16_item, sizeof(crc16_item));
+			break;
+		}
+		case CRC32:
+		{
+			view_hash(&crc32_item, sizeof(crc32_item));
+			break;
+		}
+		case SHA1:
+		{
+			view_hash(&sha1_item, sizeof(sha1_item));
+			break;
+		}
+		case NONE:
+		default:
+		{
+			break;
+		}
+	}
 
 
 	return 0;

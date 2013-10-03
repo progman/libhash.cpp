@@ -1,12 +1,145 @@
 #!/bin/bash
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-rm -rf bin &> /dev/null;
-mkdir bin &> /dev/null;
+APP='./bin/hash';
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+# run app
+function run_app()
+{
+	if [ "${FLAG_VALGRIND}" != "1" ];
+	then
+		STDOUT=$(cat | ${APP} "${@}");
+	else
+		VAL="valgrind --tool=memcheck --leak-check=yes --leak-check=full --show-reachable=yes --log-file=valgrind.log";
 
-g++ test.cpp crc32.cpp crc16.cpp sha1.c sha1.cpp -I./ -o bin/test -m64 -pedantic -std=c++11 -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O0 -g3 -ggdb -pg;
-g++ hash.cpp crc32.cpp crc16.cpp sha1.c sha1.cpp -I./ -o bin/hash -m64 -pedantic -std=c++11 -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O0 -g3 -ggdb -pg;
+		STDOUT=$(cat | ${VAL} ${APP} "${@}");
 
-./bin/test;
+		echo '--------------------------' >> valgrind.all.log;
+		cat valgrind.log >> valgrind.all.log;
+		rm -rf valgrind.log;
+	fi
 
-exit "${?}";
+
+	if [ "${STDOUT}" != "" ];
+	then
+		echo "${STDOUT}";
+	fi
+}
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+function check()
+{
+	RESULT=$(echo -n "${STR}" | run_app -"${1}");
+	if [ "${RESULT}" != "${HASH}" ];
+	then
+		echo "ERROR: result different for "${1}"...";
+		echo "RESULT : ${RESULT}";
+		echo "HASH   : ${HASH}";
+		exit 1;
+	fi
+}
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+# test1
+function test1()
+{
+	STR='Mom';
+	HASH="ca0d";
+	check 'crc16';
+
+
+	STR='Mom wash';
+	HASH="6afd";
+	check 'crc16';
+
+
+	STR='Mom wash window frame';
+	HASH="fec0";
+	check 'crc16';
+
+
+	STR='Mom wash window frame and Shura balls';
+	HASH="c19a";
+	check 'crc16';
+}
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+# test2
+function test2()
+{
+	STR='Mom';
+	HASH="5665ad0c";
+	check 'crc32';
+
+
+	STR='Mom wash';
+	HASH="2769fdb4";
+	check 'crc32';
+
+
+	STR='Mom wash window frame';
+	HASH="660246ce";
+	check 'crc32';
+
+
+	STR='Mom wash window frame and Shura balls';
+	HASH="18a5b32d";
+	check 'crc32';
+}
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+# test3
+function test3()
+{
+	STR='Mom';
+	HASH="0967082f2aa15d0a0c0acc03ed8e64555840f63f";
+	check 'sha1';
+
+
+	STR='Mom wash';
+	HASH="6d56273df975bbc6ef1eed1ec18368843647588c";
+	check 'sha1';
+
+
+	STR='Mom wash window frame';
+	HASH="3fa55a9fbceb88f31faaa8f69b04a109ffddc3aa";
+	check 'sha1';
+
+
+	STR='Mom wash window frame and Shura balls';
+	HASH="95afdf31b23f267e97b88c88553cdd325d9f5b52";
+	check 'sha1';
+}
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+# check depends
+function check_prog()
+{
+	for i in ${1};
+	do
+		if [ "$(which ${i})" == "" ];
+		then
+			echo "FATAL: you must install \"${i}\"...";
+			return 1;
+		fi
+	done
+
+	return 0;
+}
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+if [ ! -e "${APP}" ];
+then
+	echo "ERROR: make it";
+	exit 1;
+fi
+
+
+check_prog "awk cat echo md5sum mktemp rm stat";
+if [ "${?}" != "0" ];
+then
+	exit 1;
+fi
+
+
+test1;
+test2;
+test3;
+
+
+echo "ok, test passed";
+exit 0;
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#

@@ -1,77 +1,36 @@
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+// http://ru.wikipedia.org/wiki/SHA1
+// wrapper for SHA1 from http://ftp.gnu.org/gnu/coreutils/coreutils-8.21.tar.xz
 // Alexey Potehin <gnuplanet@gmail.com>, http://www.gnuplanet.ru/doc/cv
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 #include <stdio.h>
-#include <stdint.h>
-#include "crc16.h"
-#include "crc32.h"
+#include "sha1.hpp"
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
-int test_crc16(const char *str, size_t size, uint16_t value_good)
+// constructor
+sha1_t::sha1_t()
 {
-	crc16_t crc16;
-	crc16.update(str, size);
-	uint16_t value = crc16.get();
-
-
-	if (value != value_good)
-	{
-		printf("ERROR: crc16 invalid (0x%04x != 0x%04x)\n", value, value_good);
-		return -1;
-	}
-
-
-	return 0;
+	this->psha1_item = NULL;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
-int test_crc32(const char *str, size_t size, uint32_t value_good)
+// open operation
+void sha1_t::open(sha1_item_t *psha1_item)
 {
-	crc32_t crc32;
-	crc32.update(str, size);
-	uint32_t value = crc32.get();
+	sha1_init_ctx (&this->ctx);
 
-
-	if (value != value_good)
-	{
-		printf("ERROR: crc32 invalid (0x%08x != 0x%08x)\n", value, value_good);
-		return -1;
-	}
-
-
-	return 0;
+	this->psha1_item = psha1_item;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
-int test()
+// update hash
+void sha1_t::update(const void * const p, uint64_t size)
 {
-	char str1[] = "Mom";
-	char str2[] = "Mom soap";
-	char str3[] = "Mom soap frame";
-	char str4[] = "Mom soap frame and Shura balls";
-
-
-	if (test_crc16(str1, sizeof(str1) - 1, 0xCA0D) != 0) return -1;
-	if (test_crc16(str2, sizeof(str2) - 1, 0x3391) != 0) return -1;
-	if (test_crc16(str3, sizeof(str3) - 1, 0xF0B1) != 0) return -1;
-	if (test_crc16(str4, sizeof(str4) - 1, 0xB1F0) != 0) return -1;
-
-
-	if (test_crc32(str1, sizeof(str1) - 1, 0x5665ad0c) != 0) return -1;
-	if (test_crc32(str2, sizeof(str2) - 1, 0xc90daf6c) != 0) return -1;
-	if (test_crc32(str3, sizeof(str3) - 1, 0x24e1dd31) != 0) return -1;
-	if (test_crc32(str4, sizeof(str4) - 1, 0x6fdb2200) != 0) return -1;
-
-
-	return 0;
+	if (this->psha1_item == NULL) return;
+	sha1_process_bytes (p, size, &this->ctx);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
-int main()
+// close operation
+void sha1_t::close()
 {
-	if (test() != 0)
-	{
-		return 1;
-	}
-	printf("ok, test passed\n");
-
-
-	return 0;
+	sha1_finish_ctx (&this->ctx, this->psha1_item);
+	this->psha1_item = NULL;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
