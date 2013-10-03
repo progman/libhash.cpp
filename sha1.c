@@ -241,7 +241,7 @@ sha1_process_bytes (const void *buffer, size_t len, struct sha1_ctx *ctx)
   if (len >= 64)
     {
 #if !_STRING_ARCH_unaligned
-#define UNALIGNED_P(p) ((uintptr_t) (p) % alignof (uint32_t) != 0)
+# define UNALIGNED_P(p) ((uintptr_t) (p) % alignof (uint32_t) != 0)
       if (UNALIGNED_P (buffer))
         while (len > 64)
           {
