@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
-// 0.0.1
+// 0.0.2
 // Alexey Potehin <gnuplanet@gmail.com>, http://www.gnuplanet.ru/doc/cv
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 #include <stdio.h>
@@ -7,6 +7,7 @@
 #include <string.h>
 #include "crc16.hpp"
 #include "crc32.hpp"
+#include "md5.hpp"
 #include "sha1.hpp"
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // view hash
@@ -23,7 +24,7 @@ void view_hash(const void * const p, size_t size)
 // view help
 void help(const char *prog_name)
 {
-	printf("example: echo 'hello world!' | %s [-crc16|crc32|sha1]\n", prog_name);
+	printf("example: echo 'hello world!' | %s [-crc16|-crc32|-md5|-sha1]\n", prog_name);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // general function
@@ -48,7 +49,7 @@ int main(int argc, char* argv[])
 	}
 
 
-	enum hash_type_t { NONE, CRC16, CRC32, SHA1 };
+	enum hash_type_t { NONE, CRC16, CRC32, MD5, SHA1 };
 	hash_type_t hash_type = NONE;
 
 
@@ -63,6 +64,12 @@ int main(int argc, char* argv[])
 		if (strcmp(argv[1], "-crc32") == 0)
 		{
 			hash_type = CRC32;
+			break;
+		}
+
+		if (strcmp(argv[1], "-md5") == 0)
+		{
+			hash_type = MD5;
 			break;
 		}
 
@@ -81,14 +88,17 @@ int main(int argc, char* argv[])
 	uint8_t ch;
 	crc16_t crc16;
 	crc32_t crc32;
+	md5_t md5;
 	sha1_t  sha1;
 	crc16_t::crc16_item_t crc16_item;
 	crc32_t::crc32_item_t crc32_item;
+	md5_t::md5_item_t md5_item;
 	sha1_t::sha1_item_t sha1_item;
 
 
 	crc16.open(&crc16_item);
 	crc32.open(&crc32_item);
+	md5.open(&md5_item);
 	sha1.open(&sha1_item);
 
 
@@ -111,6 +121,11 @@ int main(int argc, char* argv[])
 				crc32.update(&ch, sizeof(ch));
 				break;
 			}
+			case MD5:
+			{
+				md5.update(&ch, sizeof(ch));
+				break;
+			}
 			case SHA1:
 			{
 				sha1.update(&ch, sizeof(ch));
@@ -127,6 +142,7 @@ int main(int argc, char* argv[])
 
 	crc16.close();
 	crc32.close();
+	md5.close();
 	sha1.close();
 
 
@@ -140,6 +156,11 @@ int main(int argc, char* argv[])
 		case CRC32:
 		{
 			view_hash(&crc32_item, sizeof(crc32_item));
+			break;
+		}
+		case MD5:
+		{
+			view_hash(&md5_item, sizeof(md5_item));
 			break;
 		}
 		case SHA1:

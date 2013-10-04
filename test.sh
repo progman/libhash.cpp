@@ -38,31 +38,28 @@ function check()
 	fi
 }
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-# test1
-function test1()
+# test
+function test_it()
 {
 	check 'Mom'                                   'crc16' 'ca0d';
 	check 'Mom wash'                              'crc16' '6afd';
 	check 'Mom wash window frame'                 'crc16' 'fec0';
 	check 'Mom wash window frame and Shura balls' 'crc16' 'c19a';
-}
-#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-# test2
-function test2()
-{
+
 	check 'Mom'                                   'crc32' '5665ad0c';
 	check 'Mom wash'                              'crc32' '2769fdb4';
 	check 'Mom wash window frame'                 'crc32' '660246ce';
 	check 'Mom wash window frame and Shura balls' 'crc32' '18a5b32d';
-}
-#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-# test3
-function test3()
-{
-	check 'Mom'                                   'sha1' '0967082f2aa15d0a0c0acc03ed8e64555840f63f';
-	check 'Mom wash'                              'sha1' '6d56273df975bbc6ef1eed1ec18368843647588c';
-	check 'Mom wash window frame'                 'sha1' '3fa55a9fbceb88f31faaa8f69b04a109ffddc3aa';
-	check 'Mom wash window frame and Shura balls' 'sha1' '95afdf31b23f267e97b88c88553cdd325d9f5b52';
+
+	check 'Mom'                                   'sha1'  '0967082f2aa15d0a0c0acc03ed8e64555840f63f';
+	check 'Mom wash'                              'sha1'  '6d56273df975bbc6ef1eed1ec18368843647588c';
+	check 'Mom wash window frame'                 'sha1'  '3fa55a9fbceb88f31faaa8f69b04a109ffddc3aa';
+	check 'Mom wash window frame and Shura balls' 'sha1'  '95afdf31b23f267e97b88c88553cdd325d9f5b52';
+
+	check 'Mom'                                   'md5'   'c988fa7c33ce43962b9803702b747a35';
+	check 'Mom wash'                              'md5'   '497a01dabfa0f13649457d4773e184f9';
+	check 'Mom wash window frame'                 'md5'   '399ce6cc07894050d7645aae84fab537';
+	check 'Mom wash window frame and Shura balls' 'md5'   'e5794a4a922e4a5f438a229f8c89d008';
 }
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 # check depends
@@ -94,9 +91,7 @@ then
 fi
 
 
-test1;
-test2;
-test3;
+test_it;
 
 
 echo "ok, test passed";
