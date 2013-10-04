@@ -10,6 +10,7 @@
 #include "md5.hpp"
 #include "sha1.hpp"
 #include "sha256.hpp"
+#include "sha512.hpp"
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // view hash
 void view_hash(const void * const p, size_t size)
@@ -25,7 +26,7 @@ void view_hash(const void * const p, size_t size)
 // view help
 void help(const char *prog_name)
 {
-	printf("example: echo 'hello world!' | %s [-crc16|-crc32|-md5|-sha1|-sha256]\n", prog_name);
+	printf("example: echo 'hello world!' | %s [-crc16|-crc32|-md5|-sha1|-sha256|-sha512]\n", prog_name);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // general function
@@ -50,7 +51,7 @@ int main(int argc, char* argv[])
 	}
 
 
-	enum hash_type_t { NONE, CRC16, CRC32, MD5, SHA1, SHA256 };
+	enum hash_type_t { NONE, CRC16, CRC32, MD5, SHA1, SHA256, SHA512 };
 	hash_type_t hash_type = NONE;
 
 
@@ -86,6 +87,12 @@ int main(int argc, char* argv[])
 			break;
 		}
 
+		if (strcmp(argv[1], "-sha512") == 0)
+		{
+			hash_type = SHA512;
+			break;
+		}
+
 		help(argv[0]);
 		return 1;
 	}
@@ -98,11 +105,13 @@ int main(int argc, char* argv[])
 	md5_t md5;
 	sha1_t  sha1;
 	sha256_t  sha256;
+	sha512_t  sha512;
 	crc16_t::crc16_item_t crc16_item;
 	crc32_t::crc32_item_t crc32_item;
 	md5_t::md5_item_t md5_item;
 	sha1_t::sha1_item_t sha1_item;
 	sha256_t::sha256_item_t sha256_item;
+	sha512_t::sha512_item_t sha512_item;
 
 
 	crc16.open(&crc16_item);
@@ -110,6 +119,7 @@ int main(int argc, char* argv[])
 	md5.open(&md5_item);
 	sha1.open(&sha1_item);
 	sha256.open(&sha256_item);
+	sha512.open(&sha512_item);
 
 
 	for (;;)
@@ -146,6 +156,11 @@ int main(int argc, char* argv[])
 				sha256.update(&ch, sizeof(ch));
 				break;
 			}
+			case SHA512:
+			{
+				sha512.update(&ch, sizeof(ch));
+				break;
+			}
 			case NONE:
 			default:
 			{
@@ -160,6 +175,7 @@ int main(int argc, char* argv[])
 	md5.close();
 	sha1.close();
 	sha256.close();
+	sha512.close();
 
 
 	switch (hash_type)
@@ -187,6 +203,11 @@ int main(int argc, char* argv[])
 		case SHA256:
 		{
 			view_hash(&sha256_item, sizeof(sha256_item));
+			break;
+		}
+		case SHA512:
+		{
+			view_hash(&sha512_item, sizeof(sha512_item));
 			break;
 		}
 		case NONE:

@@ -66,10 +66,10 @@ function test_it()
 	check 'Mom wash window frame'                 'sha256' '00e4aee92fbc4c1b67a5e76548ea9d463f3e79fa4452265da601a2f685cf274d';
 	check 'Mom wash window frame and Shura balls' 'sha256' '48b4fbcefc3826a1a06aa006f86b969b3a321fe75cd748f6c9a4783328549cf8';
 
-#	check 'Mom'                                   'sha512' 'd621f4ecdf2e7c464ab8035c86c2a74951c9562495d4ce34efcc8969661741096a7889a194135e58212edf6ccc835a222ef2679e78a87137769f5712c65d78a2';
-#	check 'Mom wash'                              'sha512' 'c1ee6ecf992504ebeb595ff223100f7818d37d8ef39ac26bc15de9bf6bb1fc0c5fb79291f17d485d8de761d553dc154bd1ea6d8e3c8d485bf1f1c92e3fea8403';
-#	check 'Mom wash window frame'                 'sha512' '10fa3f1c5f7a1997c3e4de3c95cebb3cf8d9ea13a517b33a0c8dba56c3bb2fbeeb7d3fb0e77735a02acbf857e50c0ece65d07e8f8c7ad8bda05e95383fe0a028';
-#	check 'Mom wash window frame and Shura balls' 'sha512' '7706747799340b879088d200ea5e8888882acae9cdd55f44c87fc23f7a39791bd1015aaf8a9ff5eaa8eee39ad7e97e9ec6b559c7aff3af794205a1fe05ee1063';
+	check 'Mom'                                   'sha512' 'd621f4ecdf2e7c464ab8035c86c2a74951c9562495d4ce34efcc8969661741096a7889a194135e58212edf6ccc835a222ef2679e78a87137769f5712c65d78a2';
+	check 'Mom wash'                              'sha512' 'c1ee6ecf992504ebeb595ff223100f7818d37d8ef39ac26bc15de9bf6bb1fc0c5fb79291f17d485d8de761d553dc154bd1ea6d8e3c8d485bf1f1c92e3fea8403';
+	check 'Mom wash window frame'                 'sha512' '10fa3f1c5f7a1997c3e4de3c95cebb3cf8d9ea13a517b33a0c8dba56c3bb2fbeeb7d3fb0e77735a02acbf857e50c0ece65d07e8f8c7ad8bda05e95383fe0a028';
+	check 'Mom wash window frame and Shura balls' 'sha512' '7706747799340b879088d200ea5e8888882acae9cdd55f44c87fc23f7a39791bd1015aaf8a9ff5eaa8eee39ad7e97e9ec6b559c7aff3af794205a1fe05ee1063';
 }
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 # check depends
