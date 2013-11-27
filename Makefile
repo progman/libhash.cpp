@@ -15,19 +15,19 @@ CC              := gcc
 CXX             := g++
 LN              := g++
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-CFLAGS_x32DBG   := -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O0 -I./ -g3 -std=c99   -ggdb -pg
-CFLAGS_x32REL   := -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c99             -funroll-all-loops
-CFLAGS_x32TST   := -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c99             --analyze
-CFLAGS_x64DBG   := -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O0 -I./ -g3 -std=c99   -ggdb -pg
-CFLAGS_x64REL   := -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c99             -funroll-all-loops
-CFLAGS_x64TST   := -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c99             --analyze
+CFLAGS_x32DBG   := -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O0 -I./ -g3 -std=c99   -ggdb -pg -fstack-protector-all
+CFLAGS_x32REL   := -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c99   -funroll-all-loops
+CFLAGS_x32TST   := -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c99   --analyze -fsanitize=address -fsanitize=bounds
+CFLAGS_x64DBG   := -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O0 -I./ -g3 -std=c99   -ggdb -pg -fstack-protector-all
+CFLAGS_x64REL   := -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c99   -funroll-all-loops
+CFLAGS_x64TST   := -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c99   --analyze -fsanitize=address -fsanitize=bounds
 
-CPPFLAGS_x32DBG := -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O0 -I./ -g3 -std=c++11 -ggdb -pg
-CPPFLAGS_x32REL := -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c++11           -funroll-all-loops
-CPPFLAGS_x32TST := -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c++11           --analyze
-CPPFLAGS_x64DBG := -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O0 -I./ -g3 -std=c++11 -ggdb -pg
-CPPFLAGS_x64REL := -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c++11           -funroll-all-loops
-CPPFLAGS_x64TST := -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c++11           --analyze
+CPPFLAGS_x32DBG := -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O0 -I./ -g3 -std=c++11 -ggdb -pg -fstack-protector-all
+CPPFLAGS_x32REL := -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c++11 -funroll-all-loops
+CPPFLAGS_x32TST := -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c++11 --analyze -fsanitize=address -fsanitize=bounds
+CPPFLAGS_x64DBG := -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O0 -I./ -g3 -std=c++11 -ggdb -pg -fstack-protector-all
+CPPFLAGS_x64REL := -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c++11 -funroll-all-loops
+CPPFLAGS_x64TST := -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c++11 --analyze -fsanitize=address -fsanitize=bounds
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 LFLAGS_x32DBG   := -m32 -g3 -ggdb
 LFLAGS_x32REL   := -m32 -g0       -s
