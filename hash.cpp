@@ -24,9 +24,10 @@ void view_hash(const void * const p, size_t size)
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // view help
-void help(const char *prog_name)
+void help()
 {
-	printf("example: echo 'hello world!' | %s [-crc16|-crc32|-md5|-sha1|-sha256|-sha512]\n", prog_name);
+	printf("%s    %s\n", PROG_FULL_NAME, PROG_URL);
+	printf("example: echo 'hello world!' | %s [-crc16|-crc32|-md5|-sha1|-sha256|-sha512]\n", PROG_NAME);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // general function
@@ -34,7 +35,7 @@ int main(int argc, char* argv[])
 {
 	if (argc != 2)
 	{
-		help(argv[0]);
+		help();
 		return 1;
 	}
 
@@ -46,7 +47,7 @@ int main(int argc, char* argv[])
 		(strcmp(argv[1], "--help") == 0)
 	)
 	{
-		help(argv[0]);
+		help();
 		return 1;
 	}
 
@@ -93,7 +94,7 @@ int main(int argc, char* argv[])
 			break;
 		}
 
-		help(argv[0]);
+		help();
 		return 1;
 	}
 
