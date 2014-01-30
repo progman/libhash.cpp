@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-# 0.0.7
+# 0.0.8
 # Alexey Potehin <gnuplanet@gmail.com>, http://www.gnuplanet.ru/doc/cv
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 PROG_NAME       := hash
@@ -20,24 +20,24 @@ CXX             ?= g++
 LN              ?= g++
 STRIP           ?= strip --strip-unneeded --remove-section=.comment
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-CFLAGS_x32DBG   := $(CFLAGS)   -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O0 -I./ -g3 -std=c99   -fmax-errors=3 -ggdb -pg -fstack-protector-all
-CFLAGS_x32REL   := $(CFLAGS)   -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c99   -fmax-errors=3 -funroll-all-loops
-CFLAGS_x32TST   := $(CFLAGS)   -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c99   --analyze -fsanitize=address -fsanitize=bounds
-CFLAGS_x64DBG   := $(CFLAGS)   -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O0 -I./ -g3 -std=c99   -fmax-errors=3 -ggdb -pg -fstack-protector-all
-CFLAGS_x64REL   := $(CFLAGS)   -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c99   -fmax-errors=3 -funroll-all-loops
-CFLAGS_x64TST   := $(CFLAGS)   -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c99   --analyze -fsanitize=address -fsanitize=bounds
+CFLAGS_x32DBG   := $(CFLAGS)   -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O0 -I./ -g3 -std=c99   -fdata-sections -ffunction-sections -fmax-errors=3 -ggdb -pg -fstack-protector-all
+CFLAGS_x32REL   := $(CFLAGS)   -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c99   -fdata-sections -ffunction-sections -fmax-errors=3 -funroll-all-loops
+CFLAGS_x32TST   := $(CFLAGS)   -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c99   -fdata-sections -ffunction-sections --analyze -fsanitize=address -fsanitize=bounds
+CFLAGS_x64DBG   := $(CFLAGS)   -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O0 -I./ -g3 -std=c99   -fdata-sections -ffunction-sections -fmax-errors=3 -ggdb -pg -fstack-protector-all
+CFLAGS_x64REL   := $(CFLAGS)   -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c99   -fdata-sections -ffunction-sections -fmax-errors=3 -funroll-all-loops
+CFLAGS_x64TST   := $(CFLAGS)   -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c99   -fdata-sections -ffunction-sections --analyze -fsanitize=address -fsanitize=bounds
 
-CPPFLAGS_x32DBG := $(CPPFLAGS) -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O0 -I./ -g3 -std=c++11 -fmax-errors=3 -ggdb -pg -fstack-protector-all
-CPPFLAGS_x32REL := $(CPPFLAGS) -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c++11 -fmax-errors=3 -funroll-all-loops
-CPPFLAGS_x32TST := $(CPPFLAGS) -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c++11 --analyze -fsanitize=address -fsanitize=bounds
-CPPFLAGS_x64DBG := $(CPPFLAGS) -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O0 -I./ -g3 -std=c++11 -fmax-errors=3 -ggdb -pg -fstack-protector-all
-CPPFLAGS_x64REL := $(CPPFLAGS) -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c++11 -fmax-errors=3 -funroll-all-loops
-CPPFLAGS_x64TST := $(CPPFLAGS) -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c++11 --analyze -fsanitize=address -fsanitize=bounds
+CPPFLAGS_x32DBG := $(CPPFLAGS) -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O0 -I./ -g3 -std=c++11 -fdata-sections -ffunction-sections -fmax-errors=3 -ggdb -pg -fstack-protector-all
+CPPFLAGS_x32REL := $(CPPFLAGS) -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c++11 -fdata-sections -ffunction-sections -fmax-errors=3 -funroll-all-loops
+CPPFLAGS_x32TST := $(CPPFLAGS) -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c++11 -fdata-sections -ffunction-sections --analyze -fsanitize=address -fsanitize=bounds
+CPPFLAGS_x64DBG := $(CPPFLAGS) -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O0 -I./ -g3 -std=c++11 -fdata-sections -ffunction-sections -fmax-errors=3 -ggdb -pg -fstack-protector-all
+CPPFLAGS_x64REL := $(CPPFLAGS) -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c++11 -fdata-sections -ffunction-sections -fmax-errors=3 -funroll-all-loops
+CPPFLAGS_x64TST := $(CPPFLAGS) -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c++11 -fdata-sections -ffunction-sections --analyze -fsanitize=address -fsanitize=bounds
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-LFLAGS_x32DBG   := $(LFLAGS)   -m32 -g3 -ggdb
-LFLAGS_x32REL   := $(LFLAGS)   -m32 -g0       -s
-LFLAGS_x64DBG   := $(LFLAGS)   -m64 -g3 -ggdb
-LFLAGS_x64REL   := $(LFLAGS)   -m64 -g0       -s
+LFLAGS_x32DBG   := $(LFLAGS)   -m32 -g3 -Wl,--gc-sections -ggdb
+LFLAGS_x32REL   := $(LFLAGS)   -m32 -g0 -Wl,--gc-sections       -s
+LFLAGS_x64DBG   := $(LFLAGS)   -m64 -g3 -Wl,--gc-sections -ggdb
+LFLAGS_x64REL   := $(LFLAGS)   -m64 -g0 -Wl,--gc-sections       -s
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 VPATH           := $(dir $(C_LIST) $(CPP_LIST))
 
