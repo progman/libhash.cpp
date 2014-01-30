@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-# 0.0.9
+# 0.1.0
 # Alexey Potehin <gnuplanet@gmail.com>, http://www.gnuplanet.ru/doc/cv
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 PROG_NAME       := hash
@@ -18,7 +18,7 @@ LFLAGS          :=
 CC              ?= gcc
 CXX             ?= g++
 LN              ?= g++
-STRIP           ?= strip --strip-unneeded --remove-section=.comment
+STRIP           ?= strip --strip-unneeded -R .comment -R .GCC.command.line -R .note.gnu.gold-version
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 CFLAGS_x32DBG   := $(CFLAGS)   -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O0 -I./ -g3 -std=c99   -fdata-sections -ffunction-sections -fmax-errors=3 -ggdb -pg -fstack-protector-all
 CFLAGS_x32REL   := $(CFLAGS)   -m32 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c99   -fdata-sections -ffunction-sections -fmax-errors=3 -funroll-all-loops
