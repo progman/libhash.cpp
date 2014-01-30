@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-# 0.0.8
+# 0.0.9
 # Alexey Potehin <gnuplanet@gmail.com>, http://www.gnuplanet.ru/doc/cv
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 PROG_NAME       := hash
@@ -34,10 +34,10 @@ CPPFLAGS_x64DBG := $(CPPFLAGS) -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused
 CPPFLAGS_x64REL := $(CPPFLAGS) -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c++11 -fdata-sections -ffunction-sections -fmax-errors=3 -funroll-all-loops
 CPPFLAGS_x64TST := $(CPPFLAGS) -m64 -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -O3 -I./ -g0 -std=c++11 -fdata-sections -ffunction-sections --analyze -fsanitize=address -fsanitize=bounds
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-LFLAGS_x32DBG   := $(LFLAGS)   -m32 -g3 -Wl,--gc-sections -ggdb
-LFLAGS_x32REL   := $(LFLAGS)   -m32 -g0 -Wl,--gc-sections       -s
-LFLAGS_x64DBG   := $(LFLAGS)   -m64 -g3 -Wl,--gc-sections -ggdb
-LFLAGS_x64REL   := $(LFLAGS)   -m64 -g0 -Wl,--gc-sections       -s
+LFLAGS_x32DBG   := $(LFLAGS)   -m32 -g3 -Wl,--gc-sections -Wl,--as-needed -ggdb
+LFLAGS_x32REL   := $(LFLAGS)   -m32 -g0 -Wl,--gc-sections -Wl,--as-needed       -s
+LFLAGS_x64DBG   := $(LFLAGS)   -m64 -g3 -Wl,--gc-sections -Wl,--as-needed -ggdb
+LFLAGS_x64REL   := $(LFLAGS)   -m64 -g0 -Wl,--gc-sections -Wl,--as-needed       -s
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 VPATH           := $(dir $(C_LIST) $(CPP_LIST))
 
