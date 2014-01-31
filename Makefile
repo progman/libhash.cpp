@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-# 0.1.6
+# 0.1.9
 # Alexey Potehin <gnuplanet@gmail.com>, http://www.gnuplanet.ru/doc/cv
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 PROG_URL            := https://github.com/progman/libhash.git
@@ -20,7 +20,7 @@ CC                  ?= gcc
 CXX                 ?= g++
 LN                  ?= g++
 STRIP               := strip --strip-unneeded -R .comment -R .GCC.command.line -R .note.gnu.gold-version
-AR                  := ar rs
+AR                  := ar rsc
 RM                  := rm -rf
 MKDIR               := mkdir
 REF                 := ln -sf
@@ -133,242 +133,234 @@ $(OUT_DIR) :
 	fi
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 $(OUT_DIR)/%.x32dbg.exe.o   : %.c   $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CC)  $< -c $(CFLAGS_x32DBG.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x32dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
+	@$(CC)  $< -c $(CFLAGS_x32DBG.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x32dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
 $(OUT_DIR)/%.x32rel.exe.o   : %.c   $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CC)  $< -c $(CFLAGS_x32REL.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x32-$(PROG_VERSION)"'
+	@$(CC)  $< -c $(CFLAGS_x32REL.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x32-$(PROG_VERSION)"'
 $(OUT_DIR)/%.x32tst.exe.o   : %.c   $(HEADER_LIST) Makefile | $(OUT_DIR)
-	clang  $< -c $(CFLAGS_x32TST.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x32-$(PROG_VERSION)"'
+	@clang  $< -c $(CFLAGS_x32TST.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x32-$(PROG_VERSION)"'
 $(OUT_DIR)/%.x64dbg.exe.o   : %.c   $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CC)  $< -c $(CFLAGS_x64DBG.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x64dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
+	@$(CC)  $< -c $(CFLAGS_x64DBG.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x64dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
 $(OUT_DIR)/%.x64rel.exe.o   : %.c   $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CC)  $< -c $(CFLAGS_x64REL.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x64-$(PROG_VERSION)"'
+	@$(CC)  $< -c $(CFLAGS_x64REL.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x64-$(PROG_VERSION)"'
 $(OUT_DIR)/%.x64tst.exe.o   : %.c   $(HEADER_LIST) Makefile | $(OUT_DIR)
-	clang  $< -c $(CFLAGS_x64TST.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x64-$(PROG_VERSION)"'
+	@clang  $< -c $(CFLAGS_x64TST.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x64-$(PROG_VERSION)"'
 
 $(OUT_DIR)/%.x32dbg.dll.o   : %.c   $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CC)  $< -c $(CFLAGS_x32DBG.DLL)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x32dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
+	@$(CC)  $< -c $(CFLAGS_x32DBG.DLL)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x32dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
 $(OUT_DIR)/%.x32rel.dll.o   : %.c   $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CC)  $< -c $(CFLAGS_x32REL.DLL)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x32-$(PROG_VERSION)"'
+	@$(CC)  $< -c $(CFLAGS_x32REL.DLL)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x32-$(PROG_VERSION)"'
 $(OUT_DIR)/%.x64dbg.dll.o   : %.c   $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CC)  $< -c $(CFLAGS_x64DBG.DLL)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x64dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
+	@$(CC)  $< -c $(CFLAGS_x64DBG.DLL)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x64dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
 $(OUT_DIR)/%.x64rel.dll.o   : %.c   $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CC)  $< -c $(CFLAGS_x64REL.DLL)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x64-$(PROG_VERSION)"'
+	@$(CC)  $< -c $(CFLAGS_x64REL.DLL)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x64-$(PROG_VERSION)"'
 
 $(OUT_DIR)/%.x32dbg.lib.o   : %.c   $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CC)  $< -c $(CFLAGS_x32DBG.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x32dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
+	@$(CC)  $< -c $(CFLAGS_x32DBG.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x32dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
 $(OUT_DIR)/%.x32rel.lib.o   : %.c   $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CC)  $< -c $(CFLAGS_x32REL.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x32-$(PROG_VERSION)"'
+	@$(CC)  $< -c $(CFLAGS_x32REL.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x32-$(PROG_VERSION)"'
 $(OUT_DIR)/%.x64dbg.lib.o   : %.c   $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CC)  $< -c $(CFLAGS_x64DBG.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x64dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
+	@$(CC)  $< -c $(CFLAGS_x64DBG.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x64dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
 $(OUT_DIR)/%.x64rel.lib.o   : %.c   $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CC)  $< -c $(CFLAGS_x64REL.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x64-$(PROG_VERSION)"'
+	@$(CC)  $< -c $(CFLAGS_x64REL.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x64-$(PROG_VERSION)"'
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 $(OUT_DIR)/%.x32dbg.exe.opp : %.cpp $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CXX) $< -c $(CPPFLAGS_x32DBG.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x32dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
+	@$(CXX) $< -c $(CPPFLAGS_x32DBG.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x32dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
 $(OUT_DIR)/%.x32rel.exe.opp : %.cpp $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CXX) $< -c $(CPPFLAGS_x32REL.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x32-$(PROG_VERSION)"'
+	@$(CXX) $< -c $(CPPFLAGS_x32REL.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x32-$(PROG_VERSION)"'
 $(OUT_DIR)/%.x32tst.exe.opp : %.cpp $(HEADER_LIST) Makefile | $(OUT_DIR)
-	clang  $< -c $(CPPFLAGS_x32TST.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x32-$(PROG_VERSION)"'
+	@clang  $< -c $(CPPFLAGS_x32TST.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x32-$(PROG_VERSION)"'
 $(OUT_DIR)/%.x64dbg.exe.opp : %.cpp $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CXX) $< -c $(CPPFLAGS_x64DBG.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x64dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
+	@$(CXX) $< -c $(CPPFLAGS_x64DBG.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x64dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
 $(OUT_DIR)/%.x64rel.exe.opp : %.cpp $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CXX) $< -c $(CPPFLAGS_x64REL.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x64-$(PROG_VERSION)"'
+	@$(CXX) $< -c $(CPPFLAGS_x64REL.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x64-$(PROG_VERSION)"'
 $(OUT_DIR)/%.x64tst.exe.opp : %.cpp $(HEADER_LIST) Makefile | $(OUT_DIR)
-	clang  $< -c $(CPPFLAGS_x64TST.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x64-$(PROG_VERSION)"'
+	@clang  $< -c $(CPPFLAGS_x64TST.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x64-$(PROG_VERSION)"'
 
 $(OUT_DIR)/%.x32dbg.dll.opp : %.cpp $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CXX) $< -c $(CPPFLAGS_x32DBG.DLL) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x32dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
+	@$(CXX) $< -c $(CPPFLAGS_x32DBG.DLL) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x32dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
 $(OUT_DIR)/%.x32rel.dll.opp : %.cpp $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CXX) $< -c $(CPPFLAGS_x32REL.DLL) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x32-$(PROG_VERSION)"'
+	@$(CXX) $< -c $(CPPFLAGS_x32REL.DLL) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x32-$(PROG_VERSION)"'
 $(OUT_DIR)/%.x64dbg.dll.opp : %.cpp $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CXX) $< -c $(CPPFLAGS_x64DBG.DLL) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x64dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
+	@$(CXX) $< -c $(CPPFLAGS_x64DBG.DLL) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x64dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
 $(OUT_DIR)/%.x64rel.dll.opp : %.cpp $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CXX) $< -c $(CPPFLAGS_x64REL.DLL) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x64-$(PROG_VERSION)"'
+	@$(CXX) $< -c $(CPPFLAGS_x64REL.DLL) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x64-$(PROG_VERSION)"'
 
 $(OUT_DIR)/%.x32dbg.lib.opp : %.cpp $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CXX) $< -c $(CPPFLAGS_x32DBG.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x32dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
+	@$(CXX) $< -c $(CPPFLAGS_x32DBG.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x32dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
 $(OUT_DIR)/%.x32rel.lib.opp : %.cpp $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CXX) $< -c $(CPPFLAGS_x32REL.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x32-$(PROG_VERSION)"'
+	@$(CXX) $< -c $(CPPFLAGS_x32REL.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x32-$(PROG_VERSION)"'
 $(OUT_DIR)/%.x64dbg.lib.opp : %.cpp $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CXX) $< -c $(CPPFLAGS_x64DBG.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x64dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
+	@$(CXX) $< -c $(CPPFLAGS_x64DBG.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x64dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
 $(OUT_DIR)/%.x64rel.lib.opp : %.cpp $(HEADER_LIST) Makefile | $(OUT_DIR)
-	$(CXX) $< -c $(CPPFLAGS_x64REL.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x64-$(PROG_VERSION)"'
+	@$(CXX) $< -c $(CPPFLAGS_x64REL.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x64-$(PROG_VERSION)"'
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-$(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION).exe : $(O_x32DBG.EXE_LIST) $(OPP_x32DBG.EXE_LIST)
-	$(LN) $(O_x32DBG.EXE_LIST) $(OPP_x32DBG.EXE_LIST) $(LFLAGS_x32DBG.EXE) -o $(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION)$(EXE)
-	objdump -Dslx $(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION) > $(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION).dump;
+$(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION)$(EXE) : $(O_x32DBG.EXE_LIST) $(OPP_x32DBG.EXE_LIST)
+	@$(LN) $(O_x32DBG.EXE_LIST) $(OPP_x32DBG.EXE_LIST) $(LFLAGS_x32DBG.EXE) -o $(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION)$(EXE)
+	@objdump -Dslx $(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION) > $(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION).dump;
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-$(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION).dll : $(O_x32DBG.DLL_LIST) $(OPP_x32DBG.DLL_LIST)
-	$(LN) $(O_x32DBG.DLL_LIST) $(OPP_x32DBG.DLL_LIST) $(LFLAGS_x32DBG.DLL) -o $(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION)$(DLL)
-	$(STRIP) $(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION)$(DLL)
+$(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION)$(DLL) : $(O_x32DBG.DLL_LIST) $(OPP_x32DBG.DLL_LIST)
+	@$(LN) $(O_x32DBG.DLL_LIST) $(OPP_x32DBG.DLL_LIST) $(LFLAGS_x32DBG.DLL) -o $(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION)$(DLL)
+	@$(STRIP) $(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION)$(DLL)
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-$(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION).lib : $(O_x32DBG.LIB_LIST) $(OPP_x32DBG.LIB_LIST)
-	$(AR) $(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION)$(LIB) $(O_x32DBG.LIB_LIST) $(OPP_x32DBG.LIB_LIST)
-	$(STRIP) $(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION)$(LIB)
+$(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION)$(LIB) : $(O_x32DBG.LIB_LIST) $(OPP_x32DBG.LIB_LIST)
+	@$(AR) $(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION)$(LIB) $(O_x32DBG.LIB_LIST) $(OPP_x32DBG.LIB_LIST)
+	@$(STRIP) $(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION)$(LIB)
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-$(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION).exe    : $(O_x32REL.EXE_LIST) $(OPP_x32REL.EXE_LIST)
-	$(LN) $(O_x32REL.EXE_LIST) $(OPP_x32REL.EXE_LIST) $(LFLAGS_x32REL.EXE) -o $(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION)$(EXE)
-	$(STRIP) $(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION)$(EXE)
+$(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION)$(EXE)    : $(O_x32REL.EXE_LIST) $(OPP_x32REL.EXE_LIST)
+	@$(LN) $(O_x32REL.EXE_LIST) $(OPP_x32REL.EXE_LIST) $(LFLAGS_x32REL.EXE) -o $(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION)$(EXE)
+	@$(STRIP) $(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION)$(EXE)
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-$(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION).dll    : $(O_x32REL.DLL_LIST) $(OPP_x32REL.DLL_LIST)
-	$(LN) $(O_x32REL.DLL_LIST) $(OPP_x32REL.DLL_LIST) $(LFLAGS_x32REL.DLL) -o $(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION)$(DLL)
-	$(STRIP) $(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION)$(DLL)
+$(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION)$(DLL)    : $(O_x32REL.DLL_LIST) $(OPP_x32REL.DLL_LIST)
+	@$(LN) $(O_x32REL.DLL_LIST) $(OPP_x32REL.DLL_LIST) $(LFLAGS_x32REL.DLL) -o $(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION)$(DLL)
+	@$(STRIP) $(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION)$(DLL)
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-$(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION).lib    : $(O_x32REL.LIB_LIST) $(OPP_x32REL.LIB_LIST)
-	$(AR) $(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION)$(LIB) $(O_x32REL.LIB_LIST) $(OPP_x32REL.LIB_LIST)
-	$(STRIP) $(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION)$(LIB)
+$(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION)$(LIB)    : $(O_x32REL.LIB_LIST) $(OPP_x32REL.LIB_LIST)
+	@$(AR) $(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION)$(LIB) $(O_x32REL.LIB_LIST) $(OPP_x32REL.LIB_LIST)
+	@$(STRIP) $(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION)$(LIB)
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-$(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION).exe : $(O_x64DBG.EXE_LIST) $(OPP_x64DBG.EXE_LIST)
-	$(LN) $(O_x64DBG.EXE_LIST) $(OPP_x64DBG.EXE_LIST) $(LFLAGS_x64DBG.EXE) -o $(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION)$(EXE)
-	objdump -Dslx $(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION) > $(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION).dump;
+$(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION)$(EXE) : $(O_x64DBG.EXE_LIST) $(OPP_x64DBG.EXE_LIST)
+	@$(LN) $(O_x64DBG.EXE_LIST) $(OPP_x64DBG.EXE_LIST) $(LFLAGS_x64DBG.EXE) -o $(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION)$(EXE)
+	@objdump -Dslx $(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION) > $(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION).dump;
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-$(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION).dll : $(O_x64DBG.DLL_LIST) $(OPP_x64DBG.DLL_LIST)
-	$(LN) $(O_x64DBG.DLL_LIST) $(OPP_x64DBG.DLL_LIST) $(LFLAGS_x64DBG.DLL) -o $(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION)$(DLL)
-	$(STRIP) $(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION)$(DLL)
+$(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION)$(DLL) : $(O_x64DBG.DLL_LIST) $(OPP_x64DBG.DLL_LIST)
+	@$(LN) $(O_x64DBG.DLL_LIST) $(OPP_x64DBG.DLL_LIST) $(LFLAGS_x64DBG.DLL) -o $(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION)$(DLL)
+	@$(STRIP) $(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION)$(DLL)
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-$(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION).lib : $(O_x64DBG.LIB_LIST) $(OPP_x64DBG.LIB_LIST)
-	$(AR) $(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION)$(LIB) $(O_x64DBG.LIB_LIST) $(OPP_x64DBG.LIB_LIST)
-	$(STRIP) $(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION)$(LIB)
+$(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION)$(LIB) : $(O_x64DBG.LIB_LIST) $(OPP_x64DBG.LIB_LIST)
+	@$(AR) $(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION)$(LIB) $(O_x64DBG.LIB_LIST) $(OPP_x64DBG.LIB_LIST)
+	@$(STRIP) $(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION)$(LIB)
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-$(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION).exe    : $(O_x64REL.EXE_LIST) $(OPP_x64REL.EXE_LIST)
-	$(LN) $(O_x64REL.EXE_LIST) $(OPP_x64REL.EXE_LIST) $(LFLAGS_x64REL.EXE) -o $(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION)$(EXE)
-	$(STRIP) $(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION)$(EXE)
+$(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION)$(EXE)    : $(O_x64REL.EXE_LIST) $(OPP_x64REL.EXE_LIST)
+	@$(LN) $(O_x64REL.EXE_LIST) $(OPP_x64REL.EXE_LIST) $(LFLAGS_x64REL.EXE) -o $(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION)$(EXE)
+	@$(STRIP) $(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION)$(EXE)
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-$(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION).dll    : $(O_x64REL.DLL_LIST) $(OPP_x64REL.DLL_LIST)
-	$(LN) $(O_x64REL.DLL_LIST) $(OPP_x64REL.DLL_LIST) $(LFLAGS_x64REL.DLL) -o $(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION)$(DLL)
-	$(STRIP) $(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION)$(DLL)
+$(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION)$(DLL)    : $(O_x64REL.DLL_LIST) $(OPP_x64REL.DLL_LIST)
+	@$(LN) $(O_x64REL.DLL_LIST) $(OPP_x64REL.DLL_LIST) $(LFLAGS_x64REL.DLL) -o $(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION)$(DLL)
+	@$(STRIP) $(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION)$(DLL)
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-$(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION).lib    : $(O_x64REL.LIB_LIST) $(OPP_x64REL.LIB_LIST)
-	$(AR) $(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION)$(LIB) $(O_x64REL.LIB_LIST) $(OPP_x64REL.LIB_LIST)
-	$(STRIP) $(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION)$(LIB)
+$(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION)$(LIB)    : $(O_x64REL.LIB_LIST) $(OPP_x64REL.LIB_LIST)
+	@$(AR) $(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION)$(LIB) $(O_x64REL.LIB_LIST) $(OPP_x64REL.LIB_LIST)
+	@$(STRIP) $(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION)$(LIB)
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 .PHONY: x32dbg.exe
-x32dbg.exe: $(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION).exe
+x32dbg.exe: $(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION)$(EXE)
 	@$(REF) $(PROG_NAME)-x32dbg-$(PROG_VERSION)$(EXE) $(OUT_DIR)/$(PROG_NAME)$(EXE)
-	@echo "ready x32dbg";
+	@echo "ready $(PROG_NAME)-x32dbg-$(PROG_VERSION)$(EXE)";
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 .PHONY: x32dbg.dll
-x32dbg.dll: $(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION).dll
+x32dbg.dll: $(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION)$(DLL)
 	@$(REF) $(PROG_NAME)-x32dbg-$(PROG_VERSION)$(DLL) $(OUT_DIR)/$(PROG_NAME)$(DLL)
-	@echo "ready x32dbg.dll";
+	@echo "ready $(PROG_NAME)-x32dbg-$(PROG_VERSION)$(DLL)";
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 .PHONY: x32dbg.lib
-x32dbg.lib: $(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION).lib
+x32dbg.lib: $(OUT_DIR)/$(PROG_NAME)-x32dbg-$(PROG_VERSION)$(LIB)
 	@$(REF) $(PROG_NAME)-x32dbg-$(PROG_VERSION)$(LIB) $(OUT_DIR)/$(PROG_NAME)$(LIB)
-	@echo "ready x32dbg.lib";
+	@echo "ready $(PROG_NAME)-x32dbg-$(PROG_VERSION)$(LIB)";
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 .PHONY: x32dbg
 x32dbg:
 	@if [ "$(PROG_TYPE)" = "exe" ]; then \
-		${MAKE} x32dbg.exe; \
+		${MAKE} -s x32dbg.exe; \
 	fi
 
 	@if [ "$(PROG_TYPE)" = "dll" ]; then \
-		${MAKE} x32dbg.dll; \
+		${MAKE} -s x32dbg.dll; \
 	fi
 
 	@if [ "$(PROG_TYPE)" = "lib" ]; then \
-		${MAKE} x32dbg.lib; \
+		${MAKE} -s x32dbg.lib; \
 	fi
-
-	@echo "ready x32dbg";
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 .PHONY: x32.exe
-x32.exe:    $(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION).exe
+x32.exe:    $(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION)$(EXE)
 	@$(REF) $(PROG_NAME)-x32-$(PROG_VERSION)$(EXE) $(OUT_DIR)/$(PROG_NAME)$(EXE)
-	@echo "ready x32";
+	@echo "ready $(PROG_NAME)-x32-$(PROG_VERSION)$(EXE)";
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 .PHONY: x32.dll
-x32.dll:    $(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION).dll
+x32.dll:    $(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION)$(DLL)
 	@$(REF) $(PROG_NAME)-x32-$(PROG_VERSION)$(DLL) $(OUT_DIR)/$(PROG_NAME)$(DLL)
-	@echo "ready x32.dll";
+	@echo "ready $(PROG_NAME)-x32-$(PROG_VERSION)$(DLL)";
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 .PHONY: x32.lib
-x32.lib:    $(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION).lib
+x32.lib:    $(OUT_DIR)/$(PROG_NAME)-x32-$(PROG_VERSION)$(LIB)
 	@$(REF) $(PROG_NAME)-x32-$(PROG_VERSION)$(LIB) $(OUT_DIR)/$(PROG_NAME)$(LIB)
-	@echo "ready x32.lib";
+	@echo "ready $(PROG_NAME)-x32-$(PROG_VERSION)$(LIB)";
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 .PHONY: x32
 x32:
 	@if [ "$(PROG_TYPE)" = "exe" ]; then \
-		${MAKE} x32.exe; \
+		${MAKE} -s x32.exe; \
 	fi
 
 	@if [ "$(PROG_TYPE)" = "dll" ]; then \
-		${MAKE} x32.dll; \
+		${MAKE} -s x32.dll; \
 	fi
 
 	@if [ "$(PROG_TYPE)" = "lib" ]; then \
-		${MAKE} x32.lib; \
+		${MAKE} -s x32.lib; \
 	fi
-
-	@echo "ready x32";
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 .PHONY: x32test
-x32test:    $(O_x32TST_LIST) $(OPP_x32TST_LIST)
+x32test:    $(O_x32TST.EXE_LIST) $(OPP_x32TST.EXE_LIST)
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 .PHONY: x64dbg.exe
-x64dbg.exe: $(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION).exe
+x64dbg.exe: $(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION)$(EXE)
 	@$(REF) $(PROG_NAME)-x64dbg-$(PROG_VERSION)$(EXE) $(OUT_DIR)/$(PROG_NAME)$(EXE)
-	@echo "ready x64dbg";
+	@echo "ready $(PROG_NAME)-x64dbg-$(PROG_VERSION)$(EXE)";
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 .PHONY: x64dbg.dll
-x64dbg.dll: $(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION).dll
+x64dbg.dll: $(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION)$(DLL)
 	@$(REF) $(PROG_NAME)-x64dbg-$(PROG_VERSION)$(DLL) $(OUT_DIR)/$(PROG_NAME)$(DLL)
-	@echo "ready x64dbg.dll";
+	@echo "ready $(PROG_NAME)-x64dbg-$(PROG_VERSION)$(DLL)";
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 .PHONY: x64dbg.lib
-x64dbg.lib: $(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION).lib
+x64dbg.lib: $(OUT_DIR)/$(PROG_NAME)-x64dbg-$(PROG_VERSION)$(LIB)
 	@$(REF) $(PROG_NAME)-x64dbg-$(PROG_VERSION)$(LIB) $(OUT_DIR)/$(PROG_NAME)$(LIB)
-	@echo "ready x64dbg.lib";
+	@echo "ready $(PROG_NAME)-x64dbg-$(PROG_VERSION)$(LIB)";
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 .PHONY: x64dbg
 x64dbg:
 	@if [ "$(PROG_TYPE)" = "exe" ]; then \
-		${MAKE} x64dbg.exe; \
+		${MAKE} -s x64dbg.exe; \
 	fi
 
 	@if [ "$(PROG_TYPE)" = "dll" ]; then \
-		${MAKE} x64dbg.dll; \
+		${MAKE} -s x64dbg.dll; \
 	fi
 
 	@if [ "$(PROG_TYPE)" = "lib" ]; then \
-		${MAKE} x64dbg.lib; \
+		${MAKE} -s x64dbg.lib; \
 	fi
-
-	@echo "ready x64dbg";
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 .PHONY: x64.exe
-x64.exe:    $(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION).exe
+x64.exe:    $(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION)$(EXE)
 	@$(REF) $(PROG_NAME)-x64-$(PROG_VERSION)$(EXE) $(OUT_DIR)/$(PROG_NAME)$(EXE)
-	@echo "ready x64";
+	@echo "ready $(PROG_NAME)-x64-$(PROG_VERSION)$(EXE)";
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 .PHONY: x64.dll
-x64.dll:    $(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION).dll
+x64.dll:    $(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION)$(DLL)
 	@$(REF) $(PROG_NAME)-x64-$(PROG_VERSION)$(DLL) $(OUT_DIR)/$(PROG_NAME)$(DLL)
-	@echo "ready x64.dll";
+	@echo "ready $(PROG_NAME)-x64-$(PROG_VERSION)$(DLL)";
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 .PHONY: x64.lib
-x64.lib:    $(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION).lib
+x64.lib:    $(OUT_DIR)/$(PROG_NAME)-x64-$(PROG_VERSION)$(LIB)
 	@$(REF) $(PROG_NAME)-x64-$(PROG_VERSION)$(LIB) $(OUT_DIR)/$(PROG_NAME)$(LIB)
-	@echo "ready x64.lib";
+	@echo "ready $(PROG_NAME)-x64-$(PROG_VERSION)$(LIB)";
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 .PHONY: x64
 x64:
 	@if [ "$(PROG_TYPE)" = "exe" ]; then \
-		${MAKE} x64.exe; \
+		${MAKE} -s x64.exe; \
 	fi
 
 	@if [ "$(PROG_TYPE)" = "dll" ]; then \
-		${MAKE} x64.dll; \
+		${MAKE} -s x64.dll; \
 	fi
 
 	@if [ "$(PROG_TYPE)" = "lib" ]; then \
-		${MAKE} x64.lib; \
+		${MAKE} -s x64.lib; \
 	fi
-
-	@echo "ready x64";
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 .PHONY: x64test
-x64test:    $(O_x64TST_LIST) $(OPP_x64TST_LIST)
+x64test:    $(O_x64TST.EXE_LIST) $(OPP_x64TST.EXE_LIST)
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
