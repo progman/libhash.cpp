@@ -5,13 +5,18 @@ APP='./bin/hash';
 # run app
 function run_app()
 {
+	local RESULT=0;
+	local STDOUT;
+
 	if [ "${FLAG_VALGRIND}" != "1" ];
 	then
-		STDOUT=$(cat | ${APP} "${@}");
+		STDOUT=$("${APP}" "${@}");
+		RESULT="${?}";
 	else
-		VAL="valgrind --tool=memcheck --leak-check=yes --leak-check=full --show-reachable=yes --log-file=valgrind.log";
+		local VAL="valgrind --tool=memcheck --leak-check=yes --leak-check=full --show-reachable=yes --log-file=valgrind.log";
 
-		STDOUT=$(cat | ${VAL} ${APP} "${@}");
+		STDOUT=$("${VAL}" "${APP}" "${@}");
+		RESULT="${?}";
 
 		echo '--------------------------' >> valgrind.all.log;
 		cat valgrind.log >> valgrind.all.log;
@@ -23,6 +28,8 @@ function run_app()
 	then
 		echo "${STDOUT}";
 	fi
+
+	return "${RESULT}";
 }
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 function check()
