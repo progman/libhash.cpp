@@ -15,7 +15,7 @@ sha256_t::sha256_t()
 // open operation
 void sha256_t::open(sha256_item_t *psha256_item)
 {
-	sha256_init_ctx (&this->ctx);
+	sha256_init_ctx(&this->ctx);
 
 	this->psha256_item = psha256_item;
 }
@@ -24,13 +24,13 @@ void sha256_t::open(sha256_item_t *psha256_item)
 void sha256_t::update(const void * const p, uint64_t size)
 {
 	if (this->psha256_item == NULL) return;
-	sha256_process_bytes (p, size, &this->ctx);
+	sha256_process_bytes(p, size, &this->ctx);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // close operation
 void sha256_t::close()
 {
-	sha256_finish_ctx (&this->ctx, this->psha256_item);
+	sha256_finish_ctx(&this->ctx, this->psha256_item);
 	this->psha256_item = NULL;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//

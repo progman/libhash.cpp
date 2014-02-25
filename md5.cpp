@@ -15,7 +15,7 @@ md5_t::md5_t()
 // open operation
 void md5_t::open(md5_item_t *pmd5_item)
 {
-	md5_init_ctx (&this->ctx);
+	md5_init_ctx(&this->ctx);
 
 	this->pmd5_item = pmd5_item;
 }
@@ -24,13 +24,13 @@ void md5_t::open(md5_item_t *pmd5_item)
 void md5_t::update(const void * const p, uint64_t size)
 {
 	if (this->pmd5_item == NULL) return;
-	md5_process_bytes (p, size, &this->ctx);
+	md5_process_bytes(p, size, &this->ctx);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // close operation
 void md5_t::close()
 {
-	md5_finish_ctx (&this->ctx, this->pmd5_item);
+	md5_finish_ctx(&this->ctx, this->pmd5_item);
 	this->pmd5_item = NULL;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//

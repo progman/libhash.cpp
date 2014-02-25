@@ -15,7 +15,7 @@ sha512_t::sha512_t()
 // open operation
 void sha512_t::open(sha512_item_t *psha512_item)
 {
-	sha512_init_ctx (&this->ctx);
+	sha512_init_ctx(&this->ctx);
 
 	this->psha512_item = psha512_item;
 }
@@ -24,13 +24,13 @@ void sha512_t::open(sha512_item_t *psha512_item)
 void sha512_t::update(const void * const p, uint64_t size)
 {
 	if (this->psha512_item == NULL) return;
-	sha512_process_bytes (p, size, &this->ctx);
+	sha512_process_bytes(p, size, &this->ctx);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // close operation
 void sha512_t::close()
 {
-	sha512_finish_ctx (&this->ctx, this->psha512_item);
+	sha512_finish_ctx(&this->ctx, this->psha512_item);
 	this->psha512_item = NULL;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//

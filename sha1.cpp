@@ -15,7 +15,7 @@ sha1_t::sha1_t()
 // open operation
 void sha1_t::open(sha1_item_t *psha1_item)
 {
-	sha1_init_ctx (&this->ctx);
+	sha1_init_ctx(&this->ctx);
 
 	this->psha1_item = psha1_item;
 }
@@ -24,13 +24,13 @@ void sha1_t::open(sha1_item_t *psha1_item)
 void sha1_t::update(const void * const p, uint64_t size)
 {
 	if (this->psha1_item == NULL) return;
-	sha1_process_bytes (p, size, &this->ctx);
+	sha1_process_bytes(p, size, &this->ctx);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // close operation
 void sha1_t::close()
 {
-	sha1_finish_ctx (&this->ctx, this->psha1_item);
+	sha1_finish_ctx(&this->ctx, this->psha1_item);
 	this->psha1_item = NULL;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
