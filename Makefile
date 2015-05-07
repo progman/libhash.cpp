@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-# 0.1.9
+# 0.2.0
 # Alexey Potehin <gnuplanet@gmail.com>, http://www.gnuplanet.ru/doc/cv
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 PROG_URL            := https://github.com/progman/libhash.git
@@ -15,6 +15,9 @@ HEADER_LIST         := crc16.hpp crc32.hpp md5.h md5.hpp sha1.h sha1.hpp sha256.
 CFLAGS              :=
 CPPFLAGS            :=
 LFLAGS              :=
+
+STDC                ?= -std=c99
+STDCPP              ?= -std=c++11
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 CC                  ?= gcc
 CXX                 ?= g++
@@ -34,9 +37,9 @@ FLAGS_DBG           := $(FLAGS) -O0 -g3 -ggdb -pg -fmax-errors=3 -fstack-protect
 FLAGS_REL           := $(FLAGS) -O3 -g0           -fmax-errors=3 -funroll-all-loops
 FLAGS_TST           := $(FLAGS) -O3 -g0                          --analyze -fsanitize=address -fsanitize=bounds
 
-CFLAGS_DBG          := $(FLAGS_DBG) $(CFLAGS)   -std=c99
-CFLAGS_REL          := $(FLAGS_REL) $(CFLAGS)   -std=c99
-CFLAGS_TST          := $(FLAGS_TST) $(CFLAGS)   -std=c99
+CFLAGS_DBG          := $(FLAGS_DBG) $(CFLAGS)   $(STDC)
+CFLAGS_REL          := $(FLAGS_REL) $(CFLAGS)   $(STDC)
+CFLAGS_TST          := $(FLAGS_TST) $(CFLAGS)   $(STDC)
 
 CFLAGS_x32DBG.EXE   := $(CFLAGS_DBG)            -m32
 CFLAGS_x32REL.EXE   := $(CFLAGS_REL)            -m32
@@ -50,9 +53,9 @@ CFLAGS_x32REL.DLL   := $(CFLAGS_x32REL.EXE)     -fPIC
 CFLAGS_x64DBG.DLL   := $(CFLAGS_x64DBG.EXE)     -fPIC
 CFLAGS_x64REL.DLL   := $(CFLAGS_x64REL.EXE)     -fPIC
 
-CPPFLAGS_DBG        := $(FLAGS_DBG) $(CPPFLAGS) -std=c++11
-CPPFLAGS_REL        := $(FLAGS_REL) $(CPPFLAGS) -std=c++11
-CPPFLAGS_TST        := $(FLAGS_TST) $(CPPFLAGS) -std=c++11
+CPPFLAGS_DBG        := $(FLAGS_DBG) $(CPPFLAGS) $(STDCPP)
+CPPFLAGS_REL        := $(FLAGS_REL) $(CPPFLAGS) $(STDCPP)
+CPPFLAGS_TST        := $(FLAGS_TST) $(CPPFLAGS) $(STDCPP)
 
 CPPFLAGS_x32DBG.EXE := $(CPPFLAGS_DBG)          -m32
 CPPFLAGS_x32REL.EXE := $(CPPFLAGS_REL)          -m32
