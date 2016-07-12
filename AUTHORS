@@ -1,2 +1,7 @@
 http://wikipedia.org
-Alexey Potehin <gnuplanet@gmail.com>, http://www.gnuplanet.ru/doc/cv
+Ulrich Drepper <drepper@gnu.ai.mit.edu> - md5 hash
+Scott G. Miller, Robert Klep <robert@ilse.nl> - sha1 hash
+David Madore - sha256 hash
+David Madore - sha512 hash
+Paul Eggert - lib for sha512 hash
+Alexey Potehin <gnuplanet@gmail.com>, http://www.gnuplanet.ru/doc/cv - stupid wrappers

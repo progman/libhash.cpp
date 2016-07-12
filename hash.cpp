@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
-// 0.0.2
+// 0.0.3
 // Alexey Potehin <gnuplanet@gmail.com>, http://www.gnuplanet.ru/doc/cv
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 #include <stdio.h>
@@ -11,6 +11,10 @@
 #include "sha1.hpp"
 #include "sha256.hpp"
 #include "sha512.hpp"
+#include "sha3_224.hpp"
+#include "sha3_256.hpp"
+#include "sha3_384.hpp"
+#include "sha3_512.hpp"
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // view hash
 void view_hash(const void * const p, size_t size)
@@ -27,7 +31,7 @@ void view_hash(const void * const p, size_t size)
 void help()
 {
 	printf("%s    %s\n", PROG_FULL_NAME, PROG_URL);
-	printf("example: echo 'hello world!' | %s [-crc16|-crc32|-md5|-sha1|-sha256|-sha512]\n", PROG_NAME);
+	printf("example: echo 'hello world!' | %s [-crc16|-crc32|-md5|-sha1|-sha256|-sha512|-sha3_224|-sha3_256|-sha3_384|-sha3_512]\n", PROG_NAME);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // general function
@@ -52,7 +56,7 @@ int main(int argc, char* argv[])
 	}
 
 
-	enum hash_type_t { NONE, CRC16, CRC32, MD5, SHA1, SHA256, SHA512 };
+	enum hash_type_t { NONE, CRC16, CRC32, MD5, SHA1, SHA256, SHA512, SHA3_224, SHA3_256, SHA3_384, SHA3_512 };
 	hash_type_t hash_type = NONE;
 
 
@@ -94,26 +98,58 @@ int main(int argc, char* argv[])
 			break;
 		}
 
+		if (strcmp(argv[1], "-sha3_224") == 0)
+		{
+			hash_type = SHA3_224;
+			break;
+		}
+
+		if (strcmp(argv[1], "-sha3_256") == 0)
+		{
+			hash_type = SHA3_256;
+			break;
+		}
+
+		if (strcmp(argv[1], "-sha3_384") == 0)
+		{
+			hash_type = SHA3_384;
+			break;
+		}
+
+		if (strcmp(argv[1], "-sha3_512") == 0)
+		{
+			hash_type = SHA3_512;
+			break;
+		}
+
 		help();
 		return 1;
 	}
 
 
 	int rc;
-	uint8_t ch;
-	crc16_t crc16;
-	crc32_t crc32;
-	md5_t md5;
-	sha1_t  sha1;
-	sha256_t  sha256;
-	sha512_t  sha512;
-	crc16_t::crc16_item_t crc16_item;
-	crc32_t::crc32_item_t crc32_item;
-	md5_t::md5_item_t md5_item;
-	sha1_t::sha1_item_t sha1_item;
-	sha256_t::sha256_item_t sha256_item;
-	sha512_t::sha512_item_t sha512_item;
+	uint8_t    ch;
+	crc16_t    crc16;
+	crc32_t    crc32;
+	md5_t      md5;
+	sha1_t     sha1;
+	sha256_t   sha256;
+	sha512_t   sha512;
+	sha3_224_t sha3_224;
+	sha3_256_t sha3_256;
+	sha3_384_t sha3_384;
+	sha3_512_t sha3_512;
 
+	crc16_t::crc16_item_t       crc16_item;
+	crc32_t::crc32_item_t       crc32_item;
+	md5_t::md5_item_t           md5_item;
+	sha1_t::sha1_item_t         sha1_item;
+	sha256_t::sha256_item_t     sha256_item;
+	sha512_t::sha512_item_t     sha512_item;
+	sha3_224_t::sha3_224_item_t sha3_224_item;
+	sha3_256_t::sha3_256_item_t sha3_256_item;
+	sha3_384_t::sha3_384_item_t sha3_384_item;
+	sha3_512_t::sha3_512_item_t sha3_512_item;
 
 	crc16.open(&crc16_item);
 	crc32.open(&crc32_item);
@@ -121,6 +157,10 @@ int main(int argc, char* argv[])
 	sha1.open(&sha1_item);
 	sha256.open(&sha256_item);
 	sha512.open(&sha512_item);
+	sha3_224.open(&sha3_224_item);
+	sha3_256.open(&sha3_256_item);
+	sha3_384.open(&sha3_384_item);
+	sha3_512.open(&sha3_512_item);
 
 
 	for (;;)
@@ -162,6 +202,26 @@ int main(int argc, char* argv[])
 				sha512.update(&ch, sizeof(ch));
 				break;
 			}
+			case SHA3_224:
+			{
+				sha3_224.update(&ch, sizeof(ch));
+				break;
+			}
+			case SHA3_256:
+			{
+				sha3_256.update(&ch, sizeof(ch));
+				break;
+			}
+			case SHA3_384:
+			{
+				sha3_384.update(&ch, sizeof(ch));
+				break;
+			}
+			case SHA3_512:
+			{
+				sha3_512.update(&ch, sizeof(ch));
+				break;
+			}
 			case NONE:
 			default:
 			{
@@ -177,6 +237,10 @@ int main(int argc, char* argv[])
 	sha1.close();
 	sha256.close();
 	sha512.close();
+	sha3_224.close();
+	sha3_256.close();
+	sha3_384.close();
+	sha3_512.close();
 
 
 	switch (hash_type)
@@ -209,6 +273,26 @@ int main(int argc, char* argv[])
 		case SHA512:
 		{
 			view_hash(&sha512_item, sizeof(sha512_item));
+			break;
+		}
+		case SHA3_224:
+		{
+			view_hash(&sha3_224_item, sizeof(sha3_224_item));
+			break;
+		}
+		case SHA3_256:
+		{
+			view_hash(&sha3_256_item, sizeof(sha3_256_item));
+			break;
+		}
+		case SHA3_384:
+		{
+			view_hash(&sha3_384_item, sizeof(sha3_384_item));
+			break;
+		}
+		case SHA3_512:
+		{
+			view_hash(&sha3_512_item, sizeof(sha3_512_item));
 			break;
 		}
 		case NONE:

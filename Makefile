@@ -4,13 +4,13 @@
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 PROG_URL            := https://github.com/progman/libhash.git
 PROG_NAME           := hash
-PROG_VERSION        := 0.0.1
+PROG_VERSION        := 0.0.3
 PROG_TYPE           := exe
 
 OUT_DIR             := bin
-C_LIST              := md5.c sha1.c sha256.c sha512.c
-CPP_LIST            := crc16.cpp crc32.cpp md5.cpp sha1.cpp sha256.cpp sha512.cpp hash.cpp
-HEADER_LIST         := crc16.hpp crc32.hpp md5.h md5.hpp sha1.h sha1.hpp sha256.h sha256.hpp sha512.h sha512.hpp
+C_LIST              := md5.c sha1.c sha256.c sha512.c sha3.c
+CPP_LIST            := crc16.cpp crc32.cpp md5.cpp sha1.cpp sha256.cpp sha512.cpp sha3_224.cpp sha3_256.cpp sha3_384.cpp sha3_512.cpp hash.cpp
+HEADER_LIST         := crc16.hpp crc32.hpp md5.h md5.hpp sha1.h sha1.hpp sha256.h sha256.hpp sha512.h sha512.hpp sha3.h sha3_224.hpp sha3_256.hpp sha3_384.hpp sha3_512.hpp
 
 CFLAGS              :=
 CPPFLAGS            :=
@@ -31,7 +31,7 @@ EXE                 :=
 DLL                 := .so
 LIB                 := .a
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-FLAGS               := -pedantic -Wall -Wextra -Wlong-long -Wunused -pipe -march=native -mtune=native -I./
+FLAGS               := -pedantic -Wall -Wextra -Wunused -pipe -march=native -mtune=native -I./
 
 FLAGS_DBG           := $(FLAGS) -O0 -g3 -ggdb -pg -fmax-errors=3 -fstack-protector-all
 FLAGS_REL           := $(FLAGS) -O3 -g0           -fmax-errors=3 -funroll-all-loops
