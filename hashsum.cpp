@@ -1,10 +1,17 @@
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
-// 0.0.3
+// 0.0.5
 // Alexey Potehin <gnuplanet@gmail.com>, http://www.gnuplanet.ru/doc/cv
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 #include <stdio.h>
 #include <stdint.h>
+#include <stdlib.h>
 #include <string.h>
+#include <errno.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/mman.h>
+#include <fcntl.h>
 #include "crc16.hpp"
 #include "crc32.hpp"
 #include "md5.hpp"
@@ -31,13 +38,18 @@ void view_hash(const void * const p, size_t size)
 void help()
 {
 	printf("%s    %s\n", PROG_FULL_NAME, PROG_URL);
-	printf("example: echo 'hello world!' | %s [-crc16|-crc32|-md5|-sha1|-sha256|-sha512|-sha3_224|-sha3_256|-sha3_384|-sha3_512]\n", PROG_NAME);
+	printf("example: echo 'hello world!' | %s [-crc16|-crc32|-md5|-sha1|-sha256|-sha512|-sha3_224|-sha3_256|-sha3_384|-sha3_512] [FILE]\n", PROG_NAME);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // general function
 int main(int argc, char* argv[])
 {
-	if (argc != 2)
+// detect input arguments
+	if
+	(
+		(argc != 2) &&
+		(argc != 3)
+	)
 	{
 		help();
 		return 1;
@@ -56,8 +68,7 @@ int main(int argc, char* argv[])
 	}
 
 
-	enum hash_type_t { NONE, CRC16, CRC32, MD5, SHA1, SHA256, SHA512, SHA3_224, SHA3_256, SHA3_384, SHA3_512 };
-	hash_type_t hash_type = NONE;
+	enum { NONE, CRC16, CRC32, MD5, SHA1, SHA256, SHA512, SHA3_224, SHA3_256, SHA3_384, SHA3_512 } hash_type = NONE;
 
 
 	for (;;)
@@ -127,8 +138,27 @@ int main(int argc, char* argv[])
 	}
 
 
-	int rc;
-	uint8_t    ch;
+	const char *filename = NULL;
+	if (argc == 3)
+	{
+		for (;;)
+		{
+			if (strcmp(argv[2], "-") == 0)
+			{
+				break;
+			}
+			if (strcmp(argv[2], "--") == 0)
+			{
+				break;
+			}
+
+			filename = argv[2];
+			break;
+		}
+	}
+
+
+// open hashes
 	crc16_t    crc16;
 	crc32_t    crc32;
 	md5_t      md5;
@@ -151,6 +181,7 @@ int main(int argc, char* argv[])
 	sha3_384_t::sha3_384_item_t sha3_384_item;
 	sha3_512_t::sha3_512_item_t sha3_512_item;
 
+
 	crc16.open(&crc16_item);
 	crc32.open(&crc32_item);
 	md5.open(&md5_item);
@@ -163,63 +194,178 @@ int main(int argc, char* argv[])
 	sha3_512.open(&sha3_512_item);
 
 
-	for (;;)
+// read data
+	if (filename == NULL) // read from stdin
 	{
-		rc = getchar();
-		if (rc == EOF) break;
+		size_t size_max = 65536;
+		void *pdata = malloc(size_max);
+		if (pdata == NULL)
+		{
+			printf("ERROR[malloc()]: %s (%u)\n", strerror(errno), errno);
+			return 1;
+		}
 
-		ch = (uint8_t)rc;
+
+		ssize_t size;
+		for (;;)
+		{
+			size = read(STDIN_FILENO, pdata, size_max); // x12 faster than getchar()
+			if (size == 0)
+			{
+				break; // EOF
+			}
+			if (size == ssize_t(-1))
+			{
+				printf("ERROR[read()]: %s (%u)\n", strerror(errno), errno);
+				return 1;
+			}
+
+
+			switch (hash_type)
+			{
+				case CRC16:
+				{
+					crc16.update(pdata, size);
+					break;
+				}
+				case CRC32:
+				{
+					crc32.update(pdata, size);
+					break;
+				}
+				case MD5:
+				{
+					md5.update(pdata, size);
+					break;
+				}
+				case SHA1:
+				{
+					sha1.update(pdata, size);
+					break;
+				}
+				case SHA256:
+				{
+					sha256.update(pdata, size);
+					break;
+				}
+				case SHA512:
+				{
+					sha512.update(pdata, size);
+					break;
+				}
+				case SHA3_224:
+				{
+					sha3_224.update(pdata, size);
+					break;
+				}
+				case SHA3_256:
+				{
+					sha3_256.update(pdata, size);
+					break;
+				}
+				case SHA3_384:
+				{
+					sha3_384.update(pdata, size);
+					break;
+				}
+				case SHA3_512:
+				{
+					sha3_512.update(pdata, size);
+					break;
+				}
+				case NONE:
+				default:
+				{
+					break;
+				}
+			}
+		}
+
+
+		free(pdata);
+	}
+	else // read from file
+	{
+		int rc;
+
+
+		rc = ::open(filename, O_RDONLY | O_LARGEFILE);
+		if (rc == -1)
+		{
+			printf("ERROR[open()]: %s (%u)\n", strerror(errno), errno);
+			return 1;
+		}
+		int fd = rc;
+
+
+		struct stat my_stat;
+		rc = fstat(fd, &my_stat);
+		if (rc == -1)
+		{
+			printf("ERROR[fstat()]: %s (%u)\n", strerror(errno), errno);
+			return 1;
+		}
+		off_t size = my_stat.st_size;
+
+
+		void *pdata = mmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
+		if (pdata == MAP_FAILED)
+		{
+			printf("ERROR[mmap()]: %s (%u)\n", strerror(errno), errno);
+			return 1;
+		}
+
 
 		switch (hash_type)
 		{
 			case CRC16:
 			{
-				crc16.update(&ch, sizeof(ch));
+				crc16.update(pdata, size);
 				break;
 			}
 			case CRC32:
 			{
-				crc32.update(&ch, sizeof(ch));
+				crc32.update(pdata, size);
 				break;
 			}
 			case MD5:
 			{
-				md5.update(&ch, sizeof(ch));
+				md5.update(pdata, size);
 				break;
 			}
 			case SHA1:
 			{
-				sha1.update(&ch, sizeof(ch));
+				sha1.update(pdata, size);
 				break;
 			}
 			case SHA256:
 			{
-				sha256.update(&ch, sizeof(ch));
+				sha256.update(pdata, size);
 				break;
 			}
 			case SHA512:
 			{
-				sha512.update(&ch, sizeof(ch));
+				sha512.update(pdata, size);
 				break;
 			}
 			case SHA3_224:
 			{
-				sha3_224.update(&ch, sizeof(ch));
+				sha3_224.update(pdata, size);
 				break;
 			}
 			case SHA3_256:
 			{
-				sha3_256.update(&ch, sizeof(ch));
+				sha3_256.update(pdata, size);
 				break;
 			}
 			case SHA3_384:
 			{
-				sha3_384.update(&ch, sizeof(ch));
+				sha3_384.update(pdata, size);
 				break;
 			}
 			case SHA3_512:
 			{
-				sha3_512.update(&ch, sizeof(ch));
+				sha3_512.update(pdata, size);
 				break;
 			}
 			case NONE:
@@ -228,9 +374,16 @@ int main(int argc, char* argv[])
 				break;
 			}
 		}
+
+
+		munmap(pdata, size);
+
+
+		::close(fd);
 	}
 
 
+// finalyze hashes
 	crc16.close();
 	crc32.close();
 	md5.close();
@@ -243,6 +396,7 @@ int main(int argc, char* argv[])
 	sha3_512.close();
 
 
+// show hash
 	switch (hash_type)
 	{
 		case CRC16:
