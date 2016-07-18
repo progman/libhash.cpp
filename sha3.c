@@ -41,13 +41,15 @@ static void keccakf(uint64_t st[25], int rounds)
 	for (round = 0; round < rounds; round++) {
 
 		// Theta
-		for (i = 0; i < 5; i++)
+		for (i = 0; i < 5; i++) {
 			bc[i] = st[i] ^ st[i + 5] ^ st[i + 10] ^ st[i + 15] ^ st[i + 20];
+		}
 
 		for (i = 0; i < 5; i++) {
 			t = bc[(i + 4) % 5] ^ ROTL64(bc[(i + 1) % 5], 1);
-			for (j = 0; j < 25; j += 5)
+			for (j = 0; j < 25; j += 5) {
 				st[j + i] ^= t;
+			}
 		}
 
 		// Rho Pi
@@ -61,10 +63,12 @@ static void keccakf(uint64_t st[25], int rounds)
 
 		//  Chi
 		for (j = 0; j < 25; j += 5) {
-			for (i = 0; i < 5; i++)
+			for (i = 0; i < 5; i++) {
 				bc[i] = st[j + i];
-			for (i = 0; i < 5; i++)
+			}
+			for (i = 0; i < 5; i++) {
 				st[j + i] ^= (~bc[(i + 1) % 5]) & bc[(i + 2) % 5];
+			}
 		}
 
 		//  Iota
@@ -91,16 +95,16 @@ void sha3_update(struct sha3_state *sctx, const uint8_t *data, unsigned int len)
 	if ((sctx->partial + len) > (sctx->rsiz - 1)) {
 		if (sctx->partial) {
 			done = -sctx->partial;
-			memcpy(sctx->buf + sctx->partial, data,
-			       done + sctx->rsiz);
+			memcpy(sctx->buf + sctx->partial, data, done + sctx->rsiz);
 			src = sctx->buf;
 		}
 
 		do {
 			unsigned int i;
 
-			for (i = 0; i < sctx->rsizw; i++)
+			for (i = 0; i < sctx->rsizw; i++) {
 				sctx->st[i] ^= ((uint64_t *) src)[i];
+            }
 			keccakf(sctx->st, KECCAK_ROUNDS);
 
 			done += sctx->rsiz;
