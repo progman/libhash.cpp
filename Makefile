@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-# 0.2.1
+# 0.2.2
 # Alexey Potehin <gnuplanet@gmail.com>, http://www.gnuplanet.ru/doc/cv
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 PROG_URL            := https://github.com/progman/libhash.git
@@ -22,6 +22,7 @@ STDCPP              ?= -std=c++11
 CC                  ?= gcc
 CXX                 ?= g++
 LN                  ?= g++
+TST                 ?= clang
 STRIP               := strip --strip-unneeded -R .comment -R .GCC.command.line -R .note.gnu.gold-version
 AR                  := ar rsc
 RM                  := rm -rf
@@ -140,13 +141,13 @@ $(OUT_DIR)/%.x32dbg.exe.o   : %.c   $(HEADER_LIST) Makefile | $(OUT_DIR)
 $(OUT_DIR)/%.x32rel.exe.o   : %.c   $(HEADER_LIST) Makefile | $(OUT_DIR)
 	@$(CC)  $< -c $(CFLAGS_x32REL.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x32-$(PROG_VERSION)"'
 $(OUT_DIR)/%.x32tst.exe.o   : %.c   $(HEADER_LIST) Makefile | $(OUT_DIR)
-	@clang  $< -c $(CFLAGS_x32TST.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x32-$(PROG_VERSION)"'
+	@$(TST) $< -c $(CFLAGS_x32TST.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x32-$(PROG_VERSION)"'
 $(OUT_DIR)/%.x64dbg.exe.o   : %.c   $(HEADER_LIST) Makefile | $(OUT_DIR)
 	@$(CC)  $< -c $(CFLAGS_x64DBG.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x64dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
 $(OUT_DIR)/%.x64rel.exe.o   : %.c   $(HEADER_LIST) Makefile | $(OUT_DIR)
 	@$(CC)  $< -c $(CFLAGS_x64REL.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x64-$(PROG_VERSION)"'
 $(OUT_DIR)/%.x64tst.exe.o   : %.c   $(HEADER_LIST) Makefile | $(OUT_DIR)
-	@clang  $< -c $(CFLAGS_x64TST.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x64-$(PROG_VERSION)"'
+	@$(TST) $< -c $(CFLAGS_x64TST.EXE)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x64-$(PROG_VERSION)"'
 
 $(OUT_DIR)/%.x32dbg.dll.o   : %.c   $(HEADER_LIST) Makefile | $(OUT_DIR)
 	@$(CC)  $< -c $(CFLAGS_x32DBG.DLL)   -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x32dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
@@ -171,13 +172,13 @@ $(OUT_DIR)/%.x32dbg.exe.opp : %.cpp $(HEADER_LIST) Makefile | $(OUT_DIR)
 $(OUT_DIR)/%.x32rel.exe.opp : %.cpp $(HEADER_LIST) Makefile | $(OUT_DIR)
 	@$(CXX) $< -c $(CPPFLAGS_x32REL.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x32-$(PROG_VERSION)"'
 $(OUT_DIR)/%.x32tst.exe.opp : %.cpp $(HEADER_LIST) Makefile | $(OUT_DIR)
-	@clang  $< -c $(CPPFLAGS_x32TST.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x32-$(PROG_VERSION)"'
+	@$(TST) $< -c $(CPPFLAGS_x32TST.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x32-$(PROG_VERSION)"'
 $(OUT_DIR)/%.x64dbg.exe.opp : %.cpp $(HEADER_LIST) Makefile | $(OUT_DIR)
 	@$(CXX) $< -c $(CPPFLAGS_x64DBG.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x64dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
 $(OUT_DIR)/%.x64rel.exe.opp : %.cpp $(HEADER_LIST) Makefile | $(OUT_DIR)
 	@$(CXX) $< -c $(CPPFLAGS_x64REL.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x64-$(PROG_VERSION)"'
 $(OUT_DIR)/%.x64tst.exe.opp : %.cpp $(HEADER_LIST) Makefile | $(OUT_DIR)
-	@clang  $< -c $(CPPFLAGS_x64TST.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x64-$(PROG_VERSION)"'
+	@$(TST) $< -c $(CPPFLAGS_x64TST.EXE) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x64"'    -D'PROG_FULL_NAME="$(PROG_NAME)-x64-$(PROG_VERSION)"'
 
 $(OUT_DIR)/%.x32dbg.dll.opp : %.cpp $(HEADER_LIST) Makefile | $(OUT_DIR)
 	@$(CXX) $< -c $(CPPFLAGS_x32DBG.DLL) -o $(OUT_DIR)/$(notdir $@) -D'PROG_URL="$(PROG_URL)"' -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TYPE="$(PROG_TYPE)"' -D'PROG_TARGET="x32dbg"' -D'PROG_FULL_NAME="$(PROG_NAME)-x32dbg-$(PROG_VERSION)"' -D'FLAG_DEBUG="1"'
