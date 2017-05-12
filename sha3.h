@@ -2,6 +2,7 @@
 	http://en.wikipedia.org/wiki/SHA-3
 	Written by Jeff Garzik <jeff@garzik.org> for module of GNU/Linux kernel from https://lwn.net/Articles/518415/
 	LICENSE GPL
+	Originaly from linux/include/crypto/sha3.h SHA3_256:c96944b92955652521900dfdf798d942cc917f3d4903d98a1cda637980c55d8f
 */
 
 #ifndef __CRYPTO_SHA3_H__
