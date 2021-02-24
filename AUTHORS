@@ -4,4 +4,5 @@ Scott G. Miller, Robert Klep <robert@ilse.nl> - sha1 hash
 David Madore - sha256 hash
 David Madore - sha512 hash
 Paul Eggert - lib for sha512 hash
+Jeff Garzik <jeff@garzik.org> - sha3_224, sha3_256, sha3_384, sha3_512
 Alexey Potehin <gnuplanet@gmail.com>, http://www.gnuplanet.ru/doc/cv - stupid wrappers
